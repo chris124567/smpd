@@ -9,12 +9,14 @@ The first actually usable command line MPD client.  Featuring tab completion and
 
 # Install:
 `$ ./build.sh`
+
 `# ./install.sh`
 
 # Sample Usage of Most Used Features:
 Case 1:
 
 `smpd -x Ettor[TAB]`
+
 `smpd -x Ettore\ Stratta`
 
 Would erase the current queue and then play all songs by artist Ettore Strata.
@@ -22,7 +24,9 @@ Would erase the current queue and then play all songs by artist Ettore Strata.
 Case 2:
 
 `smpd -a Lovin[TAB]`
+
 `smpd -a Loving\ You Erik[TAB]`
+
 `smpd -a Loving\ You Erik\ Satie`
 
 Would play all songs titled "Loving You", along with all songs by "Erik Satie".

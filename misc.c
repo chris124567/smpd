@@ -21,4 +21,3 @@ void print_help(void) {
         "current queue before adding the results\n",
         VERSION);
 }
-
