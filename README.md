@@ -62,8 +62,10 @@ Note: -x and -a have identical behavior, except -x deletes the current queue bef
 ```
 
 # Miscellaneous:
+* Written in C99
+* Compiles with maximum security features (see variable SEC in build.sh) and optimizations (CFLAGS and GCC_OPT)
+* Compiles with no warnings or errors using `-Wall -Wextra -Wshadow -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes` on gcc-8.3.0
 * Tested all options with valgrind-3.14.0 to make sure there's no memory leaks, including testing w/ errors (hope I got everything, but C inevitably introduces bugs)
 * Formatted with clang-format (see .clang-format for configuration)
 * Implemented error handling for every libmpdclient call
 * I use all of the functionality except the search/adding songs via my keyboard shortcut manager, xbindkeys.  An excerpt of my configuration can be seen in the `xbindkeys_excerpt` file.
-
