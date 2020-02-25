@@ -1,31 +1,31 @@
 # skip to next song
-"kpmpd -n 1"
+"smpd -n 1"
   Mod4 + bracketright
 # go to previous song
-"kpmpd -n -1"
+"smpd -n -1"
   Mod4 + bracketleft
 # skip to next song
-"kpmpd -n 1"
+"smpd -n 1"
   XF86AudioNext
 # go to previous song
-"kpmpd -n -1"
+"smpd -n -1"
   XF86AudioPrev
 # toggle playing
-"kpmpd -t"
+"smpd -t"
   XF86AudioPlay
 # go ahead 6 seconds in current song
-"kpmpd -P 6"
+"smpd -P 6"
   Mod4 + equal
 # go back 6 seconds in current song
-"kpmpd -P -6"
+"smpd -P -6"
   Mod4 + minus
 # toggle playing
-"kpmpd -t" 
+"smpd -t" 
   Mod4 + p
 # shuffle playlist
-"kpmpd -R"
+"smpd -R"
   Mod4 + comma
 # clear playlist
-"kpmpd -c"
+"smpd -c"
   Mod4 + i
 
