@@ -19,13 +19,13 @@ _smpd()
     case "${COMP_WORDS[1]}" in
 	\-x)
 		local words=$(kpmpd -0)
-    		COMPREPLY=( $( grep -i "^$cur1" <( printf %s\\n "$words" ) 2>/dev/null | _escape ) )
+		COMPREPLY=( $( grep -i "^${cur1}" <(printf %s\\n "${words}") 2>/dev/null | _escape ) )
 		return 0
 	;;
 	\-a)
-                local words=$(kpmpd -0)
-                COMPREPLY=( $( grep -i "^$cur1" <( printf %s\\n "$words" ) 2>/dev/null | _escape ) )
-                return 0
+        local words=$(kpmpd -0)
+        COMPREPLY=( $( grep -i "^${cur1}" <(printf %s\\n "${words}") 2>/dev/null | _escape ) )
+        return 0
 	;;
 
 	*)
