@@ -73,3 +73,6 @@ Note: -x and -a have identical behavior, except -x deletes the current queue bef
 * Formatted with clang-format (see .clang-format for configuration)
 * Implemented error handling for every libmpdclient call
 * I use all of the functionality except the search/adding songs via my keyboard shortcut manager, xbindkeys.  An excerpt of my configuration can be seen in the `xbindkeys_excerpt` file.
+
+# Known Issues:
+- Tab completion when files have quotes in the name

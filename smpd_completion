@@ -51,4 +51,4 @@ _kpmpd()
     esac
 }
 
-complete -o bashdefault -o default -o nospace  -F _kpmpd kpmpd
+complete -F _kpmpd kpmpd
