@@ -2,22 +2,19 @@
 
 _escape () {
         if [ "$1" ]; then
-                printf %s "$1" | _escape
+                printf %s "$1" | _umpdc_escape
         else
                 sed -r 's/([][(){}<>=;:'\''"\$*|&!?\ ])/\\\1/g'
         fi
 }
 
-
-_kpmpd() 
+_smpd() 
 {
     COMPREPLY=()
     cur=${COMP_WORDS[COMP_CWORD]}
     prev=${COMP_WORDS[COMP_CWORD-1]}
     cur1=${cur//\./\\\.}
     IFS=$'\n'
-    MUSIC_DIR="/home/christopher/Music"
-#https://stackoverflow.com/questions/1146098/properly-handling-spaces-and-quotes-in-bash-completion please do not file any issues about this file
 
     case "${COMP_WORDS[1]}" in
 	\-x)
@@ -30,25 +27,10 @@ _kpmpd()
                 COMPREPLY=( $( grep -i "^$cur1" <( printf %s\\n "$words" ) 2>/dev/null | _escape ) )
                 return 0
 	;;
-	\-f)
-		local words=$(find -L ${MUSIC_DIR}  -regex ".*\.\(flac\|mp3\|ogg\|m4a\)" | sed -e 's@\/home\/christopher\/Music\/@@g')
-                COMPREPLY=( $( grep -i "^$cur1" <( printf %s\\n "$words" ) 2>/dev/null | _escape ) )
-		return 0
-	;;
-        \-F)
-                local words=$(find -L ${MUSIC_DIR}  -regex ".*\.\(flac\|mp3\|ogg\|m4a\)" | sed -e 's@\/home\/christopher\/Music\/@@g')
-                COMPREPLY=( $( grep -i "^$cur1" <( printf %s\\n "$words" ) 2>/dev/null | _escape ) )
-                return 0
-	;;
-        \-l)
-               	local words=$(find -L ${MUSIC_DIR}  -regex ".*\.\(flac\|mp3\|ogg\|m4a\)" | sed -e 's@\/home\/christopher\/Music\/@@g')
-               	COMPREPLY=( $( grep -i "^$cur1" <( printf %s\\n "$words" ) 2>/dev/null | _escape ) )
-               	return 0
-        ;;
 
 	*)
 	;;
     esac
 }
 
-complete -F _kpmpd kpmpd
+complete -F _smpd smpd
