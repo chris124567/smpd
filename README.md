@@ -33,6 +33,18 @@ Would play all songs titled "Loving You", along with all songs by "Erik Satie".
 
 Note: The tab completion works based on files in your library.  The above examples are hypothetical and assume that you have those artists and songs in your library.
 
+# Miscellaneous:
+* Written in C99
+* Compiles with maximum security features (see variable SEC in build.sh) and optimizations (CFLAGS and GCC_OPT)
+* Compiles with no warnings or errors using `-Wall -Wextra -Wshadow -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes` on gcc-8.3.0
+* Tested all options with valgrind-3.14.0 to make sure there's no memory leaks, including testing w/ errors (hope I got everything, but C inevitably introduces bugs)
+* Formatted with clang-format (see .clang-format for configuration)
+* Implemented error handling for every libmpdclient call
+* I use all of the functionality except the search/adding songs via my keyboard shortcut manager, xbindkeys.  An excerpt of my configuration can be seen in the `xbindkeys_excerpt` file.
+
+# Known Issues:
+- Tab completion when files have quotes in the name
+
 # Options (any of the following can be combined and chained)
 ```-0      Tab completion generator, internal
 
@@ -65,15 +77,3 @@ Note: The tab completion works based on files in your library.  The above exampl
 -x      Clear the queue, then search the library for a given query.  Takesquery(s)
 
 Note: -x and -a have identical behavior, except -x deletes the current queue before adding the results```
-
-# Miscellaneous:
-* Written in C99
-* Compiles with maximum security features (see variable SEC in build.sh) and optimizations (CFLAGS and GCC_OPT)
-* Compiles with no warnings or errors using `-Wall -Wextra -Wshadow -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes` on gcc-8.3.0
-* Tested all options with valgrind-3.14.0 to make sure there's no memory leaks, including testing w/ errors (hope I got everything, but C inevitably introduces bugs)
-* Formatted with clang-format (see .clang-format for configuration)
-* Implemented error handling for every libmpdclient call
-* I use all of the functionality except the search/adding songs via my keyboard shortcut manager, xbindkeys.  An excerpt of my configuration can be seen in the `xbindkeys_excerpt` file.
-
-# Known Issues:
-- Tab completion when files have quotes in the name
