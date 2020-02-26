@@ -12,7 +12,7 @@
 
 void clear_queue(struct mpd_connection *connection) {
     mpd_run_clear(connection);
-    mpd_check_error(connection);
+    mpd_check_error(connection, NULL, NULL);
 
 #ifdef DEBUG
     log_info("Cleared queue");
@@ -21,12 +21,12 @@ void clear_queue(struct mpd_connection *connection) {
 
 void delete_from_queue(struct mpd_connection *connection, int slot) {
     if (slot < 0) {
-        die(connection, REMOVE_NEGATIVE_FAIL);
+        die(connection, NULL, NULL, REMOVE_NEGATIVE_FAIL);
     }
     mpd_run_delete(
         connection,
         (unsigned)slot); /* safe, we check if its greater than 0 above */
-    mpd_check_error(connection);
+    mpd_check_error(connection, NULL, NULL);
 
 #ifdef DEBUG
     log_info("Deleted slot %d from queue", slot);
@@ -44,15 +44,14 @@ void print_queue(struct mpd_connection *connection) {
 
     pos = mpd_status_get_song_pos(status);
     if (pos == -1) {
-        mpd_status_free(status);
-        die(connection, NOTHING_PLAYING_FAIL);
+        die(connection, status, NULL, NOTHING_PLAYING_FAIL);
     }
-    mpd_check_error(connection);
+    mpd_check_error(connection, status, NULL);
 
     mpd_send_list_queue_meta(connection);
-    mpd_check_error(connection);
+    mpd_check_error(connection, status, NULL);
     while ((song = mpd_recv_song(connection)) != NULL) {
-        mpd_check_error(connection);
+        mpd_check_error(connection, status, song);
         if (song) {
             const char *artist = mpd_song_get_tag(song, MPD_TAG_ARTIST, 0);
             const char *title = mpd_song_get_tag(song, MPD_TAG_TITLE, 0);
@@ -80,12 +79,12 @@ void queue_relative_change(struct mpd_connection *connection, int step) {
     while (step != 0) {
         if (step > 0) {
             mpd_run_next(connection);
-            mpd_check_error(connection);
+            mpd_check_error(connection, NULL, NULL);
             --step;
         }
         if (step < 0) {
             mpd_run_previous(connection);
-            mpd_check_error(connection);
+            mpd_check_error(connection, NULL, NULL);
             ++step;
         }
     }
@@ -97,7 +96,7 @@ void queue_relative_change(struct mpd_connection *connection, int step) {
 
 void shuffle_queue(struct mpd_connection *connection) {
     mpd_run_shuffle(connection);
-    mpd_check_error(connection);
+    mpd_check_error(connection, NULL, NULL);
 
 #ifdef DEBUG
     log_info("Shuffled queue");

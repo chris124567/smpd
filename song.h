@@ -3,4 +3,5 @@
 #include <mpd/client.h>
 void print_current_song(struct mpd_connection *connection);
 void print_current_song_metadata(struct mpd_connection *connection);
+void loop_current_song(struct mpd_connection *connection, int loop_count);
 #endif

@@ -11,17 +11,14 @@ void print_current_song(struct mpd_connection *connection) {
 
     song = mpd_run_current_song(connection);
     if (song == NULL) {
-        die(connection, RECV_SONG_FAIL);
+        die(connection, NULL, NULL, RECV_SONG_FAIL); /* song is null anyways */
     }
-    mpd_check_error(connection);
+    mpd_check_error(connection, NULL, song);
 
     const char *artist = mpd_song_get_tag(song, MPD_TAG_ARTIST, 0);
     const char *title = mpd_song_get_tag(song, MPD_TAG_TITLE, 0);
 
-    if (artist && title) {
-        printf("%s - %s\n", artist, title);
-    }
-
+    printf("%s - %s", artist ? artist : NULL_STRING, title ? title : NULL_STRING);
     mpd_song_free(song);
 
 #ifdef DEBUG
@@ -35,7 +32,7 @@ void print_current_song_metadata(struct mpd_connection *connection) {
 
     song = mpd_run_current_song(connection);
     if (song == NULL) {
-        die(connection, RECV_SONG_FAIL);
+        die(connection, NULL, NULL, RECV_SONG_FAIL);
     }
 
     for (i = 0; i < 10; ++i) {
@@ -49,10 +46,38 @@ void print_current_song_metadata(struct mpd_connection *connection) {
                    NULL_STRING); /* if field does not exist */
         }
     }
+    mpd_check_error(connection, NULL, song);
     mpd_song_free(song);
-    mpd_check_error(connection);
 
 #ifdef DEBUG
     log_info("Got current song metadata");
+#endif
+}
+
+void loop_current_song(struct mpd_connection *connection, int loop_count) {
+    int i;
+    struct mpd_song *song;
+
+    if (loop_count < 0) {
+        die(connection, NULL, NULL, REMOVE_NEGATIVE_FAIL);
+    }
+
+    song = mpd_run_current_song(connection);
+    if (song == NULL) {
+        die(connection, NULL, NULL, RECV_SONG_FAIL);
+    }
+    mpd_check_error(connection, NULL, song);
+
+    const char *file_uri = mpd_song_get_uri(song);
+    if (file_uri) {
+        for (i = 0; i < loop_count; ++i) {
+            mpd_run_add(connection, file_uri);
+            mpd_check_error(connection, NULL, song);
+        }
+    }
+    mpd_song_free(song);
+
+#ifdef DEBUG
+    log_info("Looped current song %d times", loop_count);
 #endif
 }

@@ -27,9 +27,9 @@ int main(int argc, char *argv[]) {
         log_info(MSG_CONNECTION_SUCC);
 #endif
         if (mpd_connection_get_error(connection) != MPD_ERROR_SUCCESS) {
-            die(connection, MSG_CONNECTION_FAIL);
+            die(connection, NULL, NULL, MSG_CONNECTION_FAIL);
         }
-        while ((opt = getopt(argc, argv, "0a:cCd:hlLmn:p:P:rRs:tx:")) != -1) {
+        while ((opt = getopt(argc, argv, "0a:cCd:hl:Lmn:p:P:rRs:tx:")) != -1) {
             switch (opt) {
                 case '0':
                     tab_complete_list(connection);
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
                             search_all_tags(connection, argv[optind], true);
                         }
                     } else {
-                        die(connection, ADDITIONAL_ARGUMENT_FAIL);
+                        die(connection, NULL, NULL, ADDITIONAL_ARGUMENT_FAIL);
                     }
                     break;
 
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
                     if (optarg) {
                         delete_from_queue(connection, atoi(optarg));
                     } else {
-                        die(connection, ADDITIONAL_ARGUMENT_FAIL);
+                        die(connection, NULL, NULL, ADDITIONAL_ARGUMENT_FAIL);
                     }
                     break;
 
@@ -68,7 +68,11 @@ int main(int argc, char *argv[]) {
                     break;
 
                 case 'l':
-                    print_queue(connection);
+                    if (optarg) {
+                        loop_current_song(connection, atoi(optarg));
+                    } else {
+                        die(connection, NULL, NULL, ADDITIONAL_ARGUMENT_FAIL);
+                    }
                     break;
 
                 case 'L':
@@ -83,7 +87,7 @@ int main(int argc, char *argv[]) {
                     if (optarg) {
                         queue_relative_change(connection, atoi(optarg));
                     } else {
-                        die(connection, ADDITIONAL_ARGUMENT_FAIL);
+                        die(connection, NULL, NULL, ADDITIONAL_ARGUMENT_FAIL);
                     }
                     break;
 
@@ -91,7 +95,7 @@ int main(int argc, char *argv[]) {
                     if (optarg) {
                         song_set_position(connection, atoi(optarg));
                     } else {
-                        die(connection, ADDITIONAL_ARGUMENT_FAIL);
+                        die(connection, NULL, NULL, ADDITIONAL_ARGUMENT_FAIL);
                     }
                     break;
 
@@ -99,7 +103,7 @@ int main(int argc, char *argv[]) {
                     if (optarg) {
                         song_set_relative_position(connection, atoi(optarg));
                     } else {
-                        die(connection, ADDITIONAL_ARGUMENT_FAIL);
+                        die(connection, NULL, NULL, ADDITIONAL_ARGUMENT_FAIL);
                     }
                     break;
 
@@ -115,7 +119,7 @@ int main(int argc, char *argv[]) {
                     if (optarg) {
                         search_all_tags(connection, optarg, false);
                     } else {
-                        die(connection, ADDITIONAL_ARGUMENT_FAIL);
+                        die(connection, NULL, NULL, ADDITIONAL_ARGUMENT_FAIL);
                     }
                     break;
 
@@ -136,18 +140,18 @@ int main(int argc, char *argv[]) {
                                             it turns off playing mode, so we
                                             re-enable it with this */
                     } else {
-                        die(connection, ADDITIONAL_ARGUMENT_FAIL);
+                        die(connection, NULL, NULL, ADDITIONAL_ARGUMENT_FAIL);
                     }
                     break;
 
                 default:
-                    die(connection, UNKNOWN_ARGUMENT_FAIL);
+                    die(connection, NULL, NULL, UNKNOWN_ARGUMENT_FAIL);
                     break;
             }
         }
         mpd_connection_free(connection);
     } else {
-        die(NULL, MSG_CONNECTION_FAIL);
+        die(NULL, NULL, NULL, MSG_CONNECTION_FAIL);
     }
 
     exit(EXIT_SUCCESS);

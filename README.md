@@ -36,7 +36,7 @@ Note: The tab completion works based on files in your library.  The above exampl
 # Options (any of the following can be combined and chained)
 ```-0      Tab completion generator, internal
 
--a      Add search results(s) to queue (tab completed), takes query(s)
+-a      Add search results(s) to queue (tab completed), takes a query
 
 -c      Clear the queue
 
@@ -46,7 +46,9 @@ Note: The tab completion works based on files in your library.  The above exampl
 
 -h      Print this help message
 
--l, -L  Print all of the currently queued songs
+-l      Loop the current song a given amount of times, takes an integer argument
+
+-L      Print all of the currently queued songs
 
 -m      Print the current songs metadata
 
@@ -58,12 +60,11 @@ Note: The tab completion works based on files in your library.  The above exampl
 
 -r      Toggle repeat mode
 
--s      Search library, takes a query
+-s      Search library, takes query(s)
 
--x      Clear the queue, then search the library for a given query (tab completed).  Takes query(s)
+-x      Clear the queue, then search the library for a given query.  Takesquery(s)
 
 Note: -x and -a have identical behavior, except -x deletes the current queue before adding the results```
-```
 
 # Miscellaneous:
 * Written in C99

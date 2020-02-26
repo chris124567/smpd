@@ -12,11 +12,11 @@ void toggle_repeat_mode(struct mpd_connection *connection) {
 
     status = initialize_status(connection);
     old_status = mpd_status_get_repeat(status);
-    mpd_check_error(connection);
+    mpd_check_error(connection, status, NULL);
     mpd_run_repeat(connection,
                    !old_status); /* do the opposite of whatever we have */
+    mpd_check_error(connection, status, NULL);
     mpd_status_free(status);
-    mpd_check_error(connection);
 
 #ifdef DEBUG
     log_info("Toggled repeat mode from %d to %d", old_status, !old_status);
@@ -34,8 +34,8 @@ void toggle_playing(struct mpd_connection *connection) {
     } else {
         mpd_run_play(connection);
     }
+    mpd_check_error(connection, status, NULL);
     mpd_status_free(status);
-    mpd_check_error(connection);
 
 #ifdef DEBUG
     log_info("Toggled playing state");
@@ -44,12 +44,12 @@ void toggle_playing(struct mpd_connection *connection) {
 
 void song_set_position(struct mpd_connection *connection, int position) {
     if (position < 0) {
-        die(connection, REMOVE_NEGATIVE_FAIL);
+        die(connection, NULL, NULL, REMOVE_NEGATIVE_FAIL);
     }
 
     mpd_send_seek_current(connection, (float)position,
                           false); /* safe, we check if negative above */
-    mpd_check_error(connection);
+    mpd_check_error(connection, NULL, NULL);
 
 #ifdef DEBUG
     log_info("Set position to %d", position);
@@ -59,7 +59,7 @@ void song_set_position(struct mpd_connection *connection, int position) {
 void song_set_relative_position(struct mpd_connection *connection,
                                 int relative_offset) {
     mpd_send_seek_current(connection, (float)relative_offset, true);
-    mpd_check_error(connection);
+    mpd_check_error(connection, NULL, NULL);
 
 #ifdef DEBUG
     log_info("Changed relative position by %d", relative_offset);

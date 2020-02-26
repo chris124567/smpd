@@ -25,7 +25,7 @@ void tag_search(struct mpd_connection *connection, enum mpd_tag_type tag) {
     mpd_search_commit(connection);
 
     while ((pair = mpd_recv_pair_tag(connection, tag)) != NULL) {
-        mpd_check_error(connection);
+        mpd_check_error(connection, NULL, NULL);
         if (pair->value) {
             printf("%s\n", pair->value);
             mpd_return_pair(connection, pair);
@@ -47,21 +47,21 @@ void search_all_tags(struct mpd_connection *connection, char *query,
     } else {
         mpd_search_db_songs(connection, false);
     }
-    mpd_check_error(connection);
+    mpd_check_error(connection, NULL, NULL);
 
     mpd_search_add_any_tag_constraint(connection, MPD_OPERATOR_DEFAULT, query);
-    mpd_check_error(connection);
+    mpd_check_error(connection, NULL, NULL);
     mpd_search_commit(connection);
-    mpd_check_error(connection);
+    mpd_check_error(connection, NULL, NULL);
 
     if (play) { /* actually play the songs */
         if (!mpd_response_finish(connection)) {
-            mpd_check_error(connection);
+            mpd_check_error(connection, NULL, NULL);
         }
     } else { /* print the songs */
         i = 0;
         while ((song = mpd_recv_song(connection)) != NULL) {
-            mpd_check_error(connection);
+            mpd_check_error(connection, NULL, song);
             if (song) {
                 const char *artist = mpd_song_get_tag(song, MPD_TAG_ARTIST, 0);
                 const char *title = mpd_song_get_tag(song, MPD_TAG_TITLE, 0);

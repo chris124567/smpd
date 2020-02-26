@@ -11,8 +11,8 @@ struct mpd_status *initialize_status(struct mpd_connection *connection) {
     mpd_send_status(connection);
     status = mpd_recv_status(connection);
     if (status == NULL) {
-        die(connection, RECV_STATUS_FAIL);
+        die(connection, NULL, NULL, RECV_STATUS_FAIL);
     }
-    mpd_check_error(connection);
+    mpd_check_error(connection, status, NULL);
     return status;
 }
