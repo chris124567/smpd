@@ -18,7 +18,7 @@ void print_current_song(struct mpd_connection *connection) {
     const char *artist = mpd_song_get_tag(song, MPD_TAG_ARTIST, 0);
     const char *title = mpd_song_get_tag(song, MPD_TAG_TITLE, 0);
 
-    printf("%s - %s", artist ? artist : NULL_STRING,
+    printf("%s - %s\n", artist ? artist : NULL_STRING,
            title ? title : NULL_STRING);
     mpd_song_free(song);
 
