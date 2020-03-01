@@ -62,13 +62,11 @@ void search_all_tags(struct mpd_connection *connection, char *query,
         i = 0;
         while ((song = mpd_recv_song(connection)) != NULL) {
             mpd_check_error(connection, NULL, song);
-            if (song) {
-                const char *artist = mpd_song_get_tag(song, MPD_TAG_ARTIST, 0);
-                const char *title = mpd_song_get_tag(song, MPD_TAG_TITLE, 0);
-                printf("%d - %s - %s\n", i, artist ? artist : NULL_STRING,
-                       title ? title : NULL_STRING);
-                mpd_song_free(song);
-            }
+            const char *artist = mpd_song_get_tag(song, MPD_TAG_ARTIST, 0);
+            const char *title = mpd_song_get_tag(song, MPD_TAG_TITLE, 0);
+            printf("%d - %s - %s\n", i, artist ? artist : NULL_STRING,
+                   title ? title : NULL_STRING);
+            mpd_song_free(song);
             i++;
         }
     }

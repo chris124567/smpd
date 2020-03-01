@@ -35,6 +35,7 @@ void print_current_song_metadata(struct mpd_connection *connection) {
     if (song == NULL) {
         die(connection, NULL, NULL, RECV_SONG_FAIL);
     }
+    mpd_check_error(connection, NULL, song);
 
     for (i = 0; i < 10; ++i) {
         const char *field_name = mpd_tag_name(i);

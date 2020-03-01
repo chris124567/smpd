@@ -29,6 +29,7 @@ void toggle_playing(struct mpd_connection *connection) {
 
     status = initialize_status(connection);
     playing_state = mpd_status_get_state(status);
+    mpd_check_error(connection, status, NULL);
     if (playing_state == MPD_STATE_PLAY) {
         mpd_run_pause(connection, true);
     } else {
