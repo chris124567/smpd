@@ -29,7 +29,7 @@ Case 2:
 
 `smpd -a Loving\ You Erik\ Satie`
 
-Would play all songs titled "Loving You", along with all songs by "Erik Satie".
+Would add all songs titled "Loving You", along with all songs by "Erik Satie" to the current queue.
 
 Note: The tab completion works based on files in your library.  The above examples are hypothetical and assume that you have those artists and songs in your library.
 
