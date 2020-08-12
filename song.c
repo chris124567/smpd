@@ -29,6 +29,7 @@ void print_current_song(struct mpd_connection *connection) {
 
 void print_current_song_metadata(struct mpd_connection *connection) {
     int i;
+    const char *uri;
     struct mpd_song *song;
 
     song = mpd_run_current_song(connection);
@@ -37,6 +38,14 @@ void print_current_song_metadata(struct mpd_connection *connection) {
     }
     mpd_check_error(connection, NULL, song);
 
+    uri = mpd_song_get_uri(song);
+    if (uri == NULL) {
+        die(connection, NULL, NULL, RECV_SONG_FAIL);
+    }
+    mpd_check_error(connection, NULL, song);
+
+    printf("URI: %s\n", uri);
+    /* the first 10 fields are the most relevant ones */
     for (i = 0; i < 10; ++i) {
         const char *field_name = mpd_tag_name(i);
         const char *field_value = mpd_song_get_tag(song, i, 0);
