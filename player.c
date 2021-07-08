@@ -1,8 +1,9 @@
+#include "player.h"
+
 #include <mpd/client.h>
 
 #include "constants.h"
 #include "log.h"
-#include "player.h"
 #include "status.h"
 #include "util.h"
 
@@ -13,8 +14,8 @@ void toggle_repeat_mode(struct mpd_connection *connection) {
     status = initialize_status(connection);
     old_status = mpd_status_get_repeat(status);
     mpd_check_error(connection, status, NULL);
-    mpd_run_repeat(connection,
-                   !old_status); /* do the opposite of whatever we have */
+    /* do the opposite of current status */
+    mpd_run_repeat(connection, !old_status);
     mpd_check_error(connection, status, NULL);
     mpd_status_free(status);
 
@@ -48,8 +49,8 @@ void song_set_position(struct mpd_connection *connection, int position) {
         die(connection, NULL, NULL, REMOVE_NEGATIVE_FAIL);
     }
 
-    mpd_send_seek_current(connection, (float)position,
-                          false); /* safe, we check if negative above */
+    /* safe, we check if negative above */
+    mpd_send_seek_current(connection, (float)position, false);
     mpd_check_error(connection, NULL, NULL);
 
 #ifdef DEBUG
@@ -57,8 +58,7 @@ void song_set_position(struct mpd_connection *connection, int position) {
 #endif
 }
 
-void song_set_relative_position(struct mpd_connection *connection,
-                                int relative_offset) {
+void song_set_relative_position(struct mpd_connection *connection, int relative_offset) {
     mpd_send_seek_current(connection, (float)relative_offset, true);
     mpd_check_error(connection, NULL, NULL);
 

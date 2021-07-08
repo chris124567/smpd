@@ -1,8 +1,9 @@
+#include "song.h"
+
 #include <mpd/client.h>
 
 #include "constants.h"
 #include "log.h"
-#include "song.h"
 #include "status.h"
 #include "util.h"
 
@@ -18,8 +19,7 @@ void print_current_song(struct mpd_connection *connection) {
     const char *artist = mpd_song_get_tag(song, MPD_TAG_ARTIST, 0);
     const char *title = mpd_song_get_tag(song, MPD_TAG_TITLE, 0);
 
-    printf("%s - %s\n", artist ? artist : NULL_STRING,
-           title ? title : NULL_STRING);
+    printf("%s - %s\n", artist ? artist : NULL_STRING, title ? title : NULL_STRING);
     mpd_song_free(song);
 
 #ifdef DEBUG
@@ -50,12 +50,7 @@ void print_current_song_metadata(struct mpd_connection *connection) {
         const char *field_name = mpd_tag_name(i);
         const char *field_value = mpd_song_get_tag(song, i, 0);
 
-        if (field_value) {
-            printf("%s: %s\n", field_name, field_value);
-        } else {
-            printf("%s: %s\n", field_name,
-                   NULL_STRING); /* if field does not exist */
-        }
+        printf("%s: %s\n", field_name, field_value ? field_value : NULL_STRING);
     }
     mpd_check_error(connection, NULL, song);
     mpd_song_free(song);

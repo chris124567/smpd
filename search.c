@@ -1,18 +1,17 @@
-#include <stdio.h>
+#include "search.h"
 
 #include <mpd/client.h>
+#include <stdio.h>
 
 #include "constants.h"
 #include "log.h"
-#include "search.h"
 #include "util.h"
 
 void tab_complete_list(struct mpd_connection *connection) {
     /* Display all artists, albums, and titles for tab completion when adding */
     long unsigned int i;
 
-    enum mpd_tag_type mpd_tags[3] = {MPD_TAG_ARTIST, MPD_TAG_ALBUM,
-                                     MPD_TAG_TITLE};
+    enum mpd_tag_type mpd_tags[3] = {MPD_TAG_ARTIST, MPD_TAG_ALBUM, MPD_TAG_TITLE};
     for (i = 0; i < sizeof(mpd_tags) / sizeof(mpd_tags[0]); ++i) {
         tag_search(connection, mpd_tags[i]);
     }
@@ -37,8 +36,7 @@ void tag_search(struct mpd_connection *connection, enum mpd_tag_type tag) {
 #endif
 }
 
-void search_all_tags(struct mpd_connection *connection, char *query,
-                     bool play) {
+void search_all_tags(struct mpd_connection *connection, char *query, bool play) {
     int i;
     struct mpd_song *song;
 

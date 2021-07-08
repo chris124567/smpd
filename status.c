@@ -1,7 +1,8 @@
+#include "status.h"
+
 #include <mpd/client.h>
 
 #include "constants.h"
-#include "status.h"
 #include "util.h"
 
 struct mpd_status *initialize_status(struct mpd_connection *connection) {

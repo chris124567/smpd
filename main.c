@@ -1,8 +1,8 @@
+#include <getopt.h>
+#include <mpd/client.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <getopt.h>
-#include <mpd/client.h>
 #include "constants.h"
 #include "log.h"
 #include "misc.h"
@@ -131,14 +131,15 @@ int main(int argc, char *argv[]) {
                     if (optarg) {
                         clear_queue(connection);
                         optind--;
-                        for (; optind < argc && *argv[optind] != '-';
-                             optind++) {
+                        for (; optind < argc && *argv[optind] != '-'; optind++) {
                             search_all_tags(connection, argv[optind], true);
                         }
-                        toggle_playing(
-                            connection); /* for some reason after clearing queue
-                                            it turns off playing mode, so we
-                                            re-enable it with this */
+                        /*
+                        for some reason after clearing queue
+                        it turns off playing mode, so we
+                        re-enable it with this
+                        */
+                        toggle_playing(connection);
                     } else {
                         die(connection, NULL, NULL, ADDITIONAL_ARGUMENT_FAIL);
                     }

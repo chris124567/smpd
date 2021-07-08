@@ -20,13 +20,13 @@
  * IN THE SOFTWARE.
  */
 
+#include "log.h"
+
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
-#include "log.h"
 
 static struct {
     void *udata;
@@ -37,7 +37,7 @@ static struct {
 } L;
 
 static const char *level_names[] = {"TRACE", "DEBUG", "INFO",
-                                    "WARN",  "ERROR", "FATAL"};
+                                    "WARN", "ERROR", "FATAL"};
 
 #ifdef LOG_USE_COLOR
 static const char *level_colors[] = {"\x1b[94m", "\x1b[36m", "\x1b[32m",

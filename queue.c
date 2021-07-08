@@ -1,9 +1,10 @@
+#include "queue.h"
+
 #include <mpd/client.h>
 #include <stdlib.h>
 
 #include "constants.h"
 #include "log.h"
-#include "queue.h"
 #include "status.h"
 #include "util.h"
 
@@ -39,7 +40,7 @@ void print_queue(struct mpd_connection *connection) {
     struct mpd_song *song;
     struct mpd_status *status;
 
-    pos = count = 0;
+    count = 0;
     status = initialize_status(connection);
 
     pos = mpd_status_get_song_pos(status);
